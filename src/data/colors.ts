@@ -1,4 +1,6 @@
-[
+import { ColorData } from 'types/picker.type';
+
+export const COLORS: ColorData[] = [
     {
         "Name":"Абрикосовый",
         "Hex":"#FBCEB1",

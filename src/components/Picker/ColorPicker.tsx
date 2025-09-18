@@ -1,6 +1,8 @@
+'use client';
+
 import { colord, extend } from 'colord';
 import namesPlugin from 'colord/plugins/names';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect,  useState } from 'react';
 import { RgbaStringColorPicker } from 'react-colorful';
 import {
   Grid,
@@ -14,45 +16,25 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { useAppDispatch } from 'lib/hooks/useAppDispatch';
+import { useAppSelector } from 'lib/hooks/useAppSelector';
+import { selectColors, fetchColors } from 'lib/store/feature/sectors';
 
 extend([namesPlugin]);
 
-type ColorDataProps = {
-  Name: string;
-  Hex: string;
-  R: number;
-  G: number;
-  B: number;
-};
-
 const ColorPicker: FC = () => {
-  const [colorData, setColorData] = useState<ColorDataProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useAppDispatch();
 
+  const colorsData = useAppSelector(selectColors)
+  // const [colorData, setColorData] = useState<ColorDataProps[]>([]);
   const [color, setColor] = useState<string>('rgba(156, 84, 98, 0.71)');
+  const [nameColor, setNameColor] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch('data/colors.json', {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        // setColorData(response);
-        // setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setColorData([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+   dispatch(fetchColors())
   }, []);
+
   // Функция для вычисления евклидова расстояния между двумя цветами
   const calculateColorDistance = (
     r1: number,
@@ -75,8 +57,8 @@ const ColorPicker: FC = () => {
   };
 
   const findClosestColor = (targetR: number, targetG: number, targetB: number) => {
-    let closestColor = colorData[0];
-    console.log(closestColor);
+    let closestColor = colorsData[0];
+
     let minDistance = calculateColorDistance(
       targetR,
       targetG,
@@ -86,8 +68,8 @@ const ColorPicker: FC = () => {
       closestColor.B,
     );
 
-    for (let i = 1; i < colorData.length; i++) {
-      const c = colorData[i];
+    for (let i = 1; i < colorsData.length; i++) {
+      const c = colorsData[i];
       const distance = calculateColorDistance(targetR, targetG, targetB, c.R, c.G, c.B);
 
       if (distance < minDistance) {
@@ -99,17 +81,16 @@ const ColorPicker: FC = () => {
     return closestColor;
   };
 
-  const closestColor = useMemo(() => {
+  const handleClick = () => {
     const colorRGB = colord(color).toRgb();
-    return findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b);
-  }, [color]);
-
-  console.log(closestColor);
+    const nameColor = findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b)
+    setNameColor(nameColor.Name);
+  };
 
   return (
     <Grid className={'custom-layout'}>
       <DropInput
-        value={closestColor}
+      value={nameColor}
         label="Цвет"
         slotProps={{
           input: {
@@ -128,7 +109,7 @@ const ColorPicker: FC = () => {
       />
 
       <Collapse in={show} timeout={500}>
-        <RgbaStringColorPicker color={color} onChange={setColor} style={{ width: 'auto' }} />
+        <RgbaStringColorPicker color={color} onChange={setColor} style={{ width: 'auto' }} onClick={handleClick}/>
         <svg width={31} height={31} viewBox={`0 0 100 100`}>
           <circle cx="50" cy="50" r="50" fill={color} />
         </svg>
