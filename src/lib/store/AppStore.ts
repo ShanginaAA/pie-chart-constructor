@@ -1,11 +1,14 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { colorsSlice } from './feature/sectors';
+import { colorsSlice } from './feature/colors';
+import { sectorSlice } from './feature/sectors';
+
 
 
 export const store = configureStore({
   reducer: {
-   [colorsSlice.name]: colorsSlice.reducer
+   [colorsSlice.name]: colorsSlice.reducer,
+   [sectorSlice.name]: sectorSlice.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

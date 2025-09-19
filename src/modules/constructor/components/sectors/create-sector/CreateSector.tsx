@@ -1,7 +1,7 @@
-import { Button, Grid, OutlinedInputProps, TextField, TextFieldProps, styled } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import ColorPicker from 'components/Picker/ColorPicker';
+import CTextFields from 'modules/common/TextFields/CTextFields';
 import { FC } from 'react';
-import ColorPicker from '../../../components/Picker/ColorPicker';
-import CTextFields from '../../../components/common/TextFields/CTextFields';
 
 const CreateSector: FC = () => {
   const handleCreate = () => {};
@@ -21,7 +21,8 @@ const CreateSector: FC = () => {
           fontSize: '16px',
           borderRadius: '10px',
         }}
-        onClick={handleCreate}>
+        onClick={handleCreate}
+      >
         Добавить сектор
       </Button>
     </Grid>

@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch } from 'lib/hooks/useAppDispatch';
 import { useAppSelector } from 'lib/hooks/useAppSelector';
-import { selectColors, fetchColors } from 'lib/store/feature/sectors';
+import { selectColors, fetchColors } from 'lib/store/feature/colors';
 
 extend([namesPlugin]);
 

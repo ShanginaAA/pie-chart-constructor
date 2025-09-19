@@ -1,10 +1,13 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { COLORS } from 'data/colors';
-import { ColorData } from 'types/picker.type';
+import { SectorData } from 'types/sector.type';
 
-export const fetchColors = createAsyncThunk<ColorData[]>(
-  'colors/fetchColors',
+export const fetchSectors = createAsyncThunk<SectorData[]>(
+  'sectors/fetchSectors',
   async (_, { rejectWithValue, getState }) => {
-    return await COLORS
+     const { data } = await axios.get<SectorData[]>(
+      `https://68ccf6f9da4697a7f3042dc3.mockapi.io/api/v1/sectors`,
+    );
+    return data
   },
 );
