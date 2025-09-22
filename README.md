@@ -5,6 +5,7 @@ Interactive application for creating and editing pie charts by managing a list o
 # Technologies:
 
 - ReactJS 19
+- Redux
 - TypeScript
 - Material UI
 - chartjs

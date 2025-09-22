@@ -22,7 +22,7 @@ const Sector: FC<SectorData> = ({ sector_id, name, percentages, color }) => {
         <Grid sx={{ borderRight: '2px solid rgba(219, 223, 233, 1)', pr: 3 }}>{percentages}%</Grid>
         <Grid>
           <svg width={24} height={24} viewBox={`0 0 100 100`}>
-            <circle cx="50" cy="50" r="40" fill={color} />
+            <circle cx="50" cy="50" r="40" fill={color} role="img" />
           </svg>
         </Grid>
       </Grid>
