@@ -5,7 +5,6 @@ export const CInput = styled((props: TextFieldProps) => (
 ))(({ theme }) => ({
   '&': {
     width: '100%',
-    paddingTop: '16px',
   },
   '& .MuiInputBase-root': {
     height: '28px',

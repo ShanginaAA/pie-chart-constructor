@@ -4,23 +4,14 @@ import { colord, extend } from 'colord';
 import namesPlugin from 'colord/plugins/names';
 import { FC, useEffect, useState } from 'react';
 import { RgbaStringColorPicker } from 'react-colorful';
-import {
-  Grid,
-  TextField,
-  InputAdornment,
-  styled,
-  TextFieldProps,
-  Box,
-  Typography,
-  Collapse,
-} from '@mui/material';
+import { Grid, InputAdornment, Collapse } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch } from 'lib/hooks/useAppDispatch';
 import { useAppSelector } from 'lib/hooks/useAppSelector';
 import { selectColors, fetchColors } from 'lib/store/feature/colors';
 import { DropInput } from './DropInput';
-import { CInput } from './CInput';
+import ColorConverter from './ColorConverter';
 
 extend([namesPlugin]);
 
@@ -28,7 +19,7 @@ const ColorPicker: FC = () => {
   const dispatch = useAppDispatch();
 
   const colorsData = useAppSelector(selectColors);
-  // const [colorData, setColorData] = useState<ColorDataProps[]>([]);
+
   const [color, setColor] = useState<string>('rgba(156, 84, 98, 0.71)');
   const [nameColor, setNameColor] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
@@ -83,7 +74,7 @@ const ColorPicker: FC = () => {
     return closestColor;
   };
 
-  const handleClick = () => {
+  const handleClickColorPicker = () => {
     const colorRGB = colord(color).toRgb();
     const nameColor = findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b);
     setNameColor(nameColor.Name);
@@ -100,6 +91,9 @@ const ColorPicker: FC = () => {
             // readOnly: true,
             endAdornment: (
               <InputAdornment position="end">
+                <svg width={24} height={24} viewBox={`0 0 100 100`} style={{ paddingRight: '5px' }}>
+                  <circle cx="50" cy="50" r="48" fill={color} />
+                </svg>
                 <FontAwesomeIcon icon={show ? faChevronUp : faChevronDown} />
               </InputAdornment>
             ),
@@ -115,43 +109,9 @@ const ColorPicker: FC = () => {
           color={color}
           onChange={setColor}
           style={{ width: 'auto' }}
-          onClick={handleClick}
+          onClick={handleClickColorPicker}
         />
-        <svg width={31} height={31} viewBox={`0 0 100 100`}>
-          <circle cx="50" cy="50" r="50" fill={color} />
-        </svg>
-
-        <Grid display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-          <Grid
-            display={'flex'}
-            flexDirection={'column'}
-            alignItems={'center'}
-            width={'322px'}
-            gap={1}
-          >
-            <CInput
-              value={colord(color).toHex().substring(1)}
-              slotProps={{
-                input: {
-                  disableUnderline: true,
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ '& .MuiTypography-root': { fontSize: 14 } }}
-                    >
-                      #
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-            <Typography fontWeight={400} fontSize={14} lineHeight={'20px'} color="#99A1B7">
-              HEX
-            </Typography>
-          </Grid>
-
-          <Box component="img" sx={{ height: '20px', width: '20px' }} src="./images/arrow.png" />
-        </Grid>
+        <ColorConverter color={color} />
       </Collapse>
     </Grid>
   );

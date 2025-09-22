@@ -8,6 +8,7 @@ Interactive application for creating and editing pie charts by managing a list o
 - Redux
 - TypeScript
 - Material UI
+- Jest
 - chartjs
 - react-colorful
 - colord

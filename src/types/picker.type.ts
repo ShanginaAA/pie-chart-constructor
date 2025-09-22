@@ -5,3 +5,10 @@ export type ColorData = {
   G: number;
   B: number;
 };
+
+export type ColorConverterProps = {
+  color: string;
+};
+
+export type ColorModel = 'HEX' | 'RGBA' | 'HSLA';
+export const COLOR_MODELS: readonly ColorModel[] = ['HEX', 'RGBA', 'HSLA'];
