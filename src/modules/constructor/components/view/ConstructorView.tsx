@@ -43,7 +43,7 @@ const ConstructorView = () => {
       </Grid>
 
       <CModal title="Добавление сектора" open={isOpen} onClose={handleDialogClose}>
-        <CreateSector />
+        <CreateSector onClose={handleDialogClose} />
       </CModal>
     </Container>
   );

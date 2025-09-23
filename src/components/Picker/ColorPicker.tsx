@@ -12,17 +12,22 @@ import { useAppSelector } from 'lib/hooks/useAppSelector';
 import { selectColors, fetchColors } from 'lib/store/feature/colors';
 import { DropInput } from './DropInput';
 import ColorConverter from './ColorConverter';
+import { ColorPickerProps } from 'types/picker.type';
 
 extend([namesPlugin]);
 
-const ColorPicker: FC = () => {
+const ColorPicker: FC<ColorPickerProps> = ({ onColorChange, currentColor }) => {
   const dispatch = useAppDispatch();
 
   const colorsData = useAppSelector(selectColors);
 
-  const [color, setColor] = useState<string>('rgba(156, 84, 98, 0.71)');
-  const [nameColor, setNameColor] = useState<string>('');
+  const [color, setColor] = useState<string>(currentColor);
+  const [nameColor, setNameColor] = useState<string>('Светло-морковный');
   const [show, setShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    onColorChange(color);
+  }, [color]);
 
   useEffect(() => {
     dispatch(fetchColors());

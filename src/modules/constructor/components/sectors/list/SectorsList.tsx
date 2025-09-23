@@ -20,7 +20,7 @@ const SectorsList: FC = () => {
       return <SkeletonSectors />;
     } else if (sectorData && sectorData.length > 0) {
       return sectorData.map((sector: SectorData, index: number) => (
-        <Sector key={`sector-${sector.sector_id}`} {...sector} />
+        <Sector key={`sector-${sector.sectorId}`} {...sector} />
       ));
     }
   }, [fetchingStatus, sectorData]);

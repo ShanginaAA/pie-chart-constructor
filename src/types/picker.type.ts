@@ -1,6 +1,7 @@
 export type ColorPickerProps = {
   onColorChange: (color: string) => void;
   currentColor: string;
+  error?: string;
 };
 
 export type ColorData = {

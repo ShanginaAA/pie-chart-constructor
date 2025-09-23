@@ -5,44 +5,57 @@ import { FC } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useAppDispatch } from 'lib/hooks/useAppDispatch';
+import { addSector, createSector } from 'lib/store/feature/sectors';
+import { CreateSectorProps } from 'types/sector.type';
 
 const formSchema = z.object({
   // sector_id:
   name: z
     .string()
-    .min(1, 'Название не должно быть пустым.')
+    .min(1, 'Название обязательно для заполнения.')
     .max(25, 'Название не должно превышать более 25 символов.'),
   percentages: z.number().gte(1, 'Минимальное значение 1.').lte(100, 'Максимальное значение 100.'),
-  // color: z.string().nullable(),
+  color: z.string().min(1, 'Значение обязательно для заполнения.'),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const CreateSector: FC = () => {
+const CreateSector: FC<CreateSectorProps> = ({ onClose }) => {
+  const dispatch = useAppDispatch();
   const formOptions = {
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      color: 'rgba(218, 137, 32, 1)',
+    },
   };
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FormSchema>(formOptions);
 
   const onSubmit: SubmitHandler<any> = async (data: FormSchema) => {
     try {
-      console.log('data');
+      dispatch(createSector(data))
+        .unwrap()
+        .then((response) => {
+          dispatch(addSector(response));
+          onClose();
+        })
+        .catch(({ errors }) => {
+          console.log(errors);
+        })
+        .finally();
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        // handle inputs
-        console.log(data);
-      })}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Grid display={'flex'} flexDirection={'column'} gap={2}>
         <CTextFields
           {...register('name')}
@@ -56,7 +69,10 @@ const CreateSector: FC = () => {
           error={!!errors.percentages}
           helperText={errors.percentages?.message}
         />
-        <ColorPicker />
+        <ColorPicker
+          onColorChange={(color) => setValue('color', color)}
+          currentColor={watch('color')}
+        />
 
         <Button
           type={'submit'}
