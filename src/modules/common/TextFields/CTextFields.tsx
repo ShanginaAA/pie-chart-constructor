@@ -10,6 +10,7 @@ const CTextFields = styled((props: TextFieldProps) => (
     {...props}
   />
 ))(({ theme }) => ({
+  '& .MuiInputBase-root': {},
   '& .MuiFilledInput-root': {
     overflow: 'hidden',
     borderRadius: 10,
@@ -17,6 +18,13 @@ const CTextFields = styled((props: TextFieldProps) => (
     backgroundColor: '#fff',
     borderColor: '#DBDFE9',
     transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
+    '&.Mui-error ': {
+      borderColor: '#d32f2f',
+      '&.Mui-focused': {
+        border: 'solid 2px #d32f2f',
+      },
+      '&:hover': { borderColor: '#d32f2f' },
+    },
     '&:hover': {
       backgroundColor: 'transparent',
       borderColor: '#B2BAC2',
@@ -24,15 +32,6 @@ const CTextFields = styled((props: TextFieldProps) => (
     '& input.MuiInputBase-input, & input.MuiAutocomplete-input': {
       height: '25px',
     },
-    '&.Mui-focused': {
-      backgroundColor: 'transparent',
-      borderColor: theme.palette.primary.main,
-    },
-
-    // ...theme.applyStyles('dark', {
-    //   backgroundColor: '#1A2027',
-    //   borderColor: '#2D3843',
-    // }),
   },
 }));
 
