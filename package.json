@@ -1,6 +1,7 @@
 {
   "name": "pie-chart",
   "version": "0.1.0",
+  "homepage": "https://shanginaaa.github.io/pie-chart-constructor",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -61,6 +62,7 @@
   "devDependencies": {
     "@types/chart.js": "^4.0.1",
     "@types/jest": "^30.0.0",
+    "gh-pages": "^6.3.0",
     "jest-environment-jsdom": "^30.1.2",
     "ts-node": "^10.9.2"
   }
