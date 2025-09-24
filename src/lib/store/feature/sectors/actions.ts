@@ -24,3 +24,30 @@ export const createSector = createAsyncThunk<SectorData, any, { state: RootState
       .catch((error) => rejectWithValue(error.response.data));
   },
 );
+
+export const editSector = createAsyncThunk<SectorData, any, { state: RootState }>(
+  'sectors/editSector',
+  async (payload, { rejectWithValue, getState }) => {
+    return await axios
+      .put<SectorData>(
+        `https://68ccf6f9da4697a7f3042dc3.mockapi.io/api/v1/sectors/${payload.sectorId}`,
+        payload.data,
+      )
+      .then((resp) => {
+        return resp.data;
+      })
+      .catch((error) => rejectWithValue(error.response.data));
+  },
+);
+
+export const deleteSector = createAsyncThunk<any, string, { state: RootState }>(
+  'sectors/deleteSector',
+  async (id, { rejectWithValue, getState }) => {
+    return await axios
+      .delete(`https://68ccf6f9da4697a7f3042dc3.mockapi.io/api/v1/sectors/${id}`)
+      .then((resp) => {
+        return resp.data;
+      })
+      .catch((error) => rejectWithValue(error.response.data));
+  },
+);

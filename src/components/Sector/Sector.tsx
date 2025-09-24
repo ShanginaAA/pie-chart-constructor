@@ -1,8 +1,28 @@
-import { Grid, Typography } from '@mui/material';
-import { FC } from 'react';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Grid, IconButton, Typography } from '@mui/material';
+import { useDialog } from 'lib/hooks/useDialog';
+import DeleteSector from 'modules/constructor/components/sectors/delete-sector/DeleteSector';
+import EditSector from 'modules/constructor/components/sectors/edit-sector/EditSector';
+import { FC, useState } from 'react';
 import { SectorData } from 'types/sector.type';
 
-const Sector: FC<SectorData> = ({ sectorId, name, percentages, color }) => {
+const Sector: FC<SectorData> = ({ ...props }) => {
+  const { sectorId, name, percentages, color } = props;
+  const { openId, isOpen, handleDialogOpen, handleDialogClose } = useDialog();
+
+  const [currentModal, setCurrentModal] = useState<string | null>(null);
+
+  const onEdit = () => {
+    setCurrentModal('edit');
+    handleDialogOpen();
+  };
+
+  const onDelete = () => {
+    setCurrentModal('delete');
+    handleDialogOpen();
+  };
+
   return (
     <Grid
       container
@@ -30,7 +50,42 @@ const Sector: FC<SectorData> = ({ sectorId, name, percentages, color }) => {
           </svg>
         </Grid>
       </Grid>
-      <Grid></Grid>
+      <Grid display={'flex'} gap={'20px'} height={24} alignItems={'center'}>
+        <IconButton
+          onClick={onEdit}
+          sx={{
+            width: '24px',
+            height: '24px',
+            padding: '0px',
+            margin: '-5px',
+            color: '#99A1B7',
+          }}
+        >
+          <FontAwesomeIcon icon={faPen} size="2xs" />
+        </IconButton>
+        <IconButton
+          onClick={onDelete}
+          sx={{
+            width: '24px',
+            height: '24px',
+            padding: '0px',
+            margin: '-5px',
+            color: '#99A1B7',
+          }}
+        >
+          <FontAwesomeIcon icon={faTrash} size="2xs" />
+        </IconButton>
+      </Grid>
+      <EditSector
+        open={currentModal === 'edit' && isOpen}
+        sector={props}
+        onClose={handleDialogClose}
+      />
+      <DeleteSector
+        open={currentModal === 'delete' && isOpen}
+        sector={{ id: props.sectorId, name: props.name }}
+        onClose={handleDialogClose}
+      />
     </Grid>
   );
 };

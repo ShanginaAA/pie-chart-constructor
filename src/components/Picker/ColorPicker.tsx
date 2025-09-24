@@ -17,21 +17,18 @@ import { ColorPickerProps } from 'types/picker.type';
 extend([namesPlugin]);
 
 const ColorPicker: FC<ColorPickerProps> = ({ onColorChange, currentColor }) => {
-  const dispatch = useAppDispatch();
-
   const colorsData = useAppSelector(selectColors);
 
   const [color, setColor] = useState<string>(currentColor);
-  const [nameColor, setNameColor] = useState<string>('Светло-морковный');
+  const [nameColor, setNameColor] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
     onColorChange(color);
+    const colorRGB = colord(color).toRgb();
+    const nameColor = findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b);
+    setNameColor(nameColor.Name);
   }, [color]);
-
-  useEffect(() => {
-    dispatch(fetchColors());
-  }, []);
 
   // Функция для вычисления евклидова расстояния между двумя цветами
   const calculateColorDistance = (
@@ -79,11 +76,11 @@ const ColorPicker: FC<ColorPickerProps> = ({ onColorChange, currentColor }) => {
     return closestColor;
   };
 
-  const handleClickColorPicker = () => {
-    const colorRGB = colord(color).toRgb();
-    const nameColor = findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b);
-    setNameColor(nameColor.Name);
-  };
+  // const handleClickColorPicker = () => {
+  //   const colorRGB = colord(color).toRgb();
+  //   const nameColor = findClosestColor(colorRGB.r, colorRGB.g, colorRGB.b);
+  //   setNameColor(nameColor.Name);
+  // };
 
   return (
     <Grid className={'custom-layout'}>
@@ -110,12 +107,7 @@ const ColorPicker: FC<ColorPickerProps> = ({ onColorChange, currentColor }) => {
       />
 
       <Collapse in={show} timeout={500}>
-        <RgbaStringColorPicker
-          color={color}
-          onChange={setColor}
-          style={{ width: 'auto' }}
-          onClick={handleClickColorPicker}
-        />
+        <RgbaStringColorPicker color={color} onChange={setColor} style={{ width: 'auto' }} />
         <ColorConverter color={color} />
       </Collapse>
     </Grid>

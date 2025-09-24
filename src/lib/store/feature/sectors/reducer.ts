@@ -24,6 +24,23 @@ export const sectorSlice = createSlice({
         state.items = [...state.items, payload];
       }
     },
+    updateSector: (state, { payload }) => {
+      if (payload.sectorId) {
+        state.items = state.items.map((item) => {
+          if (item.sectorId !== payload.sectorId) {
+            return item;
+          }
+          return {
+            ...payload,
+          };
+        });
+      }
+    },
+    removeSector: (state, { payload }) => {
+      if (payload) {
+        state.items = state.items.filter((i) => i.sectorId !== payload);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -42,6 +59,6 @@ export const sectorSlice = createSlice({
   },
 });
 
-export const { addSector } = sectorSlice.actions;
+export const { addSector, updateSector, removeSector } = sectorSlice.actions;
 
 export default sectorSlice.reducer;

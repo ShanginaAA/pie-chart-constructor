@@ -37,21 +37,17 @@ const CreateSector: FC<CreateSectorProps> = ({ onClose }) => {
     formState: { errors },
   } = useForm<FormSchema>(formOptions);
 
-  const onSubmit: SubmitHandler<any> = async (data: FormSchema) => {
-    try {
-      dispatch(createSector(data))
-        .unwrap()
-        .then((response) => {
-          dispatch(addSector(response));
-          onClose();
-        })
-        .catch(({ errors }) => {
-          console.log(errors);
-        })
-        .finally();
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmit: SubmitHandler<FormSchema> = async (data: FormSchema) => {
+    dispatch(createSector(data))
+      .unwrap()
+      .then((response) => {
+        dispatch(addSector(response));
+        onClose();
+      })
+      .catch(({ errors }) => {
+        console.log(errors);
+      })
+      .finally();
   };
 
   return (
