@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pie-chart-constructor/static/css/main.3f7d3ca5.css",
-    "main.js": "/pie-chart-constructor/static/js/main.c6f23e27.js",
+    "main.js": "/pie-chart-constructor/static/js/main.bd1ec11b.js",
     "static/js/453.9c40105f.chunk.js": "/pie-chart-constructor/static/js/453.9c40105f.chunk.js",
     "static/media/roboto-latin-700-normal.woff2": "/pie-chart-constructor/static/media/roboto-latin-700-normal.3d32572dd5951c418e5b.woff2",
     "static/media/roboto-latin-500-normal.woff2": "/pie-chart-constructor/static/media/roboto-latin-500-normal.599f66a60bdf974e578e.woff2",
@@ -77,11 +77,11 @@
     "static/media/roboto-greek-ext-700-normal.woff": "/pie-chart-constructor/static/media/roboto-greek-ext-700-normal.f54f1cebdcefe4af6446.woff",
     "index.html": "/pie-chart-constructor/index.html",
     "main.3f7d3ca5.css.map": "/pie-chart-constructor/static/css/main.3f7d3ca5.css.map",
-    "main.c6f23e27.js.map": "/pie-chart-constructor/static/js/main.c6f23e27.js.map",
+    "main.bd1ec11b.js.map": "/pie-chart-constructor/static/js/main.bd1ec11b.js.map",
     "453.9c40105f.chunk.js.map": "/pie-chart-constructor/static/js/453.9c40105f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3f7d3ca5.css",
-    "static/js/main.c6f23e27.js"
+    "static/js/main.bd1ec11b.js"
   ]
 }
