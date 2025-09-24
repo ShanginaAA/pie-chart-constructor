@@ -1,9 +1,11 @@
+import { Collapse } from '@mui/material';
 import Sector from 'components/Sector/Sector';
 import { useAppDispatch } from 'lib/hooks/useAppDispatch';
 import { useAppSelector } from 'lib/hooks/useAppSelector';
 import { fetchSectors, sectorsFetchStatus, selectSectors } from 'lib/store/feature/sectors';
 import SkeletonSectors from 'modules/common/skeleton/SkeletonSectors';
 import React, { FC, useCallback, useEffect } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 import { SectorData } from 'types/sector.type';
 
 const SectorsList: FC = () => {
@@ -19,9 +21,15 @@ const SectorsList: FC = () => {
     if (fetchingStatus === 'idle' || fetchingStatus === 'loading') {
       return <SkeletonSectors />;
     } else if (sectorData && sectorData.length > 0) {
-      return sectorData.map((sector: SectorData, index: number) => (
-        <Sector key={`sector-${sector.sectorId}`} {...sector} />
-      ));
+      return (
+        <TransitionGroup>
+          {sectorData.map((sector: SectorData, index: number) => (
+            <Collapse key={index}>
+              <Sector key={`sector-${sector.sectorId}`} {...sector} />
+            </Collapse>
+          ))}
+        </TransitionGroup>
+      );
     }
   }, [fetchingStatus, sectorData]);
 

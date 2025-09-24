@@ -1,6 +1,6 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid, IconButton, Typography } from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import { useDialog } from 'lib/hooks/useDialog';
 import DeleteSector from 'modules/constructor/components/sectors/delete-sector/DeleteSector';
 import EditSector from 'modules/constructor/components/sectors/edit-sector/EditSector';
@@ -35,6 +35,8 @@ const Sector: FC<SectorData> = ({ ...props }) => {
         borderRadius: '10px',
         pl: 3,
         pr: 3,
+        mb: '5px',
+        // transition: 'all 0.3s ease-in-out',
       }}
     >
       <Grid container gap={3} width={'253px'} height={'24px'}>

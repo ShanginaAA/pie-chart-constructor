@@ -26,7 +26,7 @@ const ConstructorView = () => {
           </Typography>
         </Grid>
         <Grid container spacing={8} mt={'30px'}>
-          <Grid width={'541px'} display={'flex'} flexDirection={'column'} gap={'5px'}>
+          <Grid width={'541px'} display={'flex'} flexDirection={'column'}>
             <SectorsList />
             <Button
               variant="contained"

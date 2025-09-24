@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import Sector from '../Sector';
+import { SectorData } from 'types/sector.type';
 
 describe('Sector Component', () => {
-  const mockProps = {
-    sector_id: '1',
+  const mockProps: SectorData = {
+    sectorId: '1',
     name: 'Сектор-1',
     percentages: 25,
     color: '#ff0000',
